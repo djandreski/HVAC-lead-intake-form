@@ -14,9 +14,16 @@ sends no credentials.
 
 ## Production build
 
-Run `npm run build`. Static output is written to `dist/client` for deployment to
-Cloudflare.
+Run `npm run build`. The build produces a Cloudflare Worker in `dist/server`
+with the static site assets in `dist/client`.
 
-For a direct Cloudflare Pages upload, run
-`npx wrangler pages deploy dist/client --project-name summit-home-services` after
-authenticating Wrangler.
+Deploy the Worker after authenticating Wrangler:
+
+```powershell
+npx wrangler deploy --config dist/server/wrangler.json
+```
+
+In non-interactive environments, set `CLOUDFLARE_API_TOKEN` before deploying.
+Use a scoped token with permission to edit Cloudflare Workers scripts, and do
+not commit the token. This project is deployed as a Cloudflare Worker, not a
+Cloudflare Pages project.
